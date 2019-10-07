@@ -6,3 +6,5 @@ $ python manage.py runserver
 
 Making a super user:
 \$ python manage.py createsuperuser
+
+# django-magic-scraper
