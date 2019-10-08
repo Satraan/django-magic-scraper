@@ -45,7 +45,7 @@ class App extends Component {
   }
 
   render() {
-    const httpLink = new HttpLink({ uri: "http://localhost:8000/graphql" })
+    const httpLink = new HttpLink({ uri: "http://localhost:8000/graphql/" })
 
     const client = new ApolloClient({
       link: httpLink,

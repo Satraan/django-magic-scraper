@@ -1,14 +1,17 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import ApolloClient from "apollo-boost"
+import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost"
 import { gql } from "apollo-boost"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./index.css"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
 
+const httpLink = new HttpLink({ uri: "http://localhost:8000/graphql" })
+
 const client = new ApolloClient({
-  uri: "http://localhost:8000/graphql",
+  link: httpLink,
+  cache: new InMemoryCache(),
   fetchOptions: {
     mode: "no-cors"
   }
@@ -24,7 +27,7 @@ client
       }
     `
   })
-  .then(result => console.log(result.data.rates[0]))
+  .then(result => console.log(result.data))
 
 ReactDOM.render(<App />, document.getElementById("root"))
 
