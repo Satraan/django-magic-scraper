@@ -1,5 +1,8 @@
 import React, { Component } from "react"
 import styled from "styled-components"
+import { Query } from "@apollo/react-components"
+import { gql } from "apollo-boost"
+
 import {
   Button,
   Modal,
@@ -25,8 +28,15 @@ const items = [
   { value: "grape" },
   { value: "banana" }
 ]
+const query = gql`
+  query getMerchants {
+    merchants {
+      title
+    }
+  }
+`
 
-const Searchbar = () => {
+const Dropdown = ({ options }) => {
   return (
     <Downshift
       onChange={selection =>
@@ -73,6 +83,17 @@ const Searchbar = () => {
         </div>
       )}
     </Downshift>
+  )
+}
+
+const Searchbar = () => {
+  return (
+    <Query query={query}>
+      {({ loading, error, data }) => {
+        console.log(">>>>", data)
+        return <p>{data}</p>
+      }}
+    </Query>
   )
 }
 

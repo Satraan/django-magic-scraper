@@ -1,7 +1,8 @@
 import React, { Component } from "react"
 import Modal from "./components/Modal"
 import Searchbar from "./components/Searchbar"
-
+import { ApolloProvider } from "react-apollo"
+import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost"
 const todoItems = [
   {
     id: 1,
@@ -44,11 +45,23 @@ class App extends Component {
   }
 
   render() {
+    const httpLink = new HttpLink({ uri: "http://localhost:8000/graphql" })
+
+    const client = new ApolloClient({
+      link: httpLink,
+      cache: new InMemoryCache(),
+      fetchOptions: {
+        mode: "no-cors"
+      }
+    })
+
     return (
-      <main className="content">
-        <h1 className="text-white text-uppercase text-center my-4">Mox Monolith</h1>
-        <Searchbar />
-      </main>
+      <ApolloProvider client={client}>
+        <main className="content">
+          <h1 className="text-white text-uppercase text-center my-4">Mox Monolith</h1>
+          {/* <Searchbar /> */}
+        </main>
+      </ApolloProvider>
     )
   }
 }
